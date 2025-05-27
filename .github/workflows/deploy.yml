@@ -18,23 +18,20 @@ jobs:
         with:
           node-version: '20'
 
-      - name: Uninstall global AWS CDK CLI (if present)
-        run: npm uninstall -g aws-cdk || true
+      - name: Install project dependencies
+        run: npm ci
 
-      - name: Install dependencies
-        run: npm install
-
-      - name: Install AWS CDK CLI (local)
-        run: npm install aws-cdk
+      - name: Install AWS CDK CLI (v2)
+        run: npm install -g aws-cdk@2
 
       - name: Build the project
         run: npm run build
 
-      - name: Check CDK version
-        run: npx cdk --version
+      - name: Verify CDK version
+        run: cdk --version
 
       - name: Deploy CDK stack
-        run: npx cdk deploy --require-approval never
+        run: cdk deploy --require-approval never
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
