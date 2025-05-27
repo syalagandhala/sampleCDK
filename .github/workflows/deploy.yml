@@ -21,11 +21,14 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Install AWS CDK CLI
-        run: npm install -g aws-cdk
+      - name: Install AWS CDK CLI (local)
+        run: npm install aws-cdk
 
       - name: Build the project
         run: npm run build
+
+      - name: Check CDK version
+        run: npx cdk --version
 
       - name: Deploy CDK stack
         run: npx cdk deploy --require-approval never
